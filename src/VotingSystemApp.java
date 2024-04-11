@@ -6,7 +6,8 @@ import java.sql.Statement;
 
 public class VotingSystemApp {
     public static void main(String[] args) {
-        //SwingUtilities.invokeLater(MainMenu::new);
+        SwingUtilities.invokeLater(MainMenu::new);
+
 
         Connection connection = DatabaseConnector.connectToDatabase("jdbc:mysql://localhost:3306/voting_system", "root", "");
         if (connection != null) {

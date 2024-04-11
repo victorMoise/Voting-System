@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 class MainMenu extends JFrame {
     public MainMenu() {
@@ -18,9 +16,12 @@ class MainMenu extends JFrame {
         JButton loginButton = new JButton("Login");
         JButton signUpButton = new JButton("Sign Up");
 
-        // Customize button appearance
-        customizeButton(loginButton);
-        customizeButton(signUpButton);
+        // Customize button appearance only on windows, on Mac it does not work
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("windows")) {
+            customizeButton(loginButton);
+            customizeButton(signUpButton);
+        }
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -31,12 +32,8 @@ class MainMenu extends JFrame {
         gbc.gridy = 1;
         buttonPanel.add(signUpButton, gbc);
 
-        signUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new SignUpMenu();
-            }
-        });
+        signUpButton.addActionListener(e -> new SignUpMenu());
+        loginButton.addActionListener(e -> new LoginMenu());
 
         // Add button panel to the main frame
         GridBagConstraints mainGBC = new GridBagConstraints();
