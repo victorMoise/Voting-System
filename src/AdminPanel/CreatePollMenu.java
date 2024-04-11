@@ -1,4 +1,4 @@
-package AdminMenu;
+package AdminPanel;
 
 import Utils.ButtonCustomizer;
 import Database.DatabaseManager;

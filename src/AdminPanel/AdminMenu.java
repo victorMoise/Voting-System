@@ -1,9 +1,7 @@
-package AdminMenu;
+package AdminPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import Utils.ButtonCustomizer;
 

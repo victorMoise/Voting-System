@@ -6,7 +6,7 @@ import java.awt.*;
 import Database.DatabaseManager;
 import Utils.ButtonCustomizer;
 import VoterMenu.VoterMenu;
-import AdminMenu.AdminMenu;
+import AdminPanel.AdminMenu;
 
 public class LoginMenu extends JFrame {
     public LoginMenu() {

@@ -1,4 +1,4 @@
-package AdminMenu;
+package AdminPanel;
 
 public class UserManagerMenu {
 }

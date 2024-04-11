@@ -1,9 +1,17 @@
 package Database;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.json.simple.JSONArray;
 import BCrypt.BCrypt;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class DatabaseManager {
     private final Connection connection;
@@ -130,7 +138,7 @@ public class DatabaseManager {
         for (String optionTitle : options) {
             JSONObject optionObject = new JSONObject();
             optionObject.put("option", optionTitle);
-            optionObject.put("users_voted", new JSONArray());
+            optionObject.put("voters", new JSONArray());
             optionsArray.add(optionObject);
         }
 
@@ -141,5 +149,35 @@ public class DatabaseManager {
         } catch (SQLException e) {
             throw new RuntimeException("Failed to create poll", e);
         }
+    }
+
+    public List<Map<String, Object>> getPollResults() {
+        List<Map<String, Object>> polls = new ArrayList<>();
+        String sql = "SELECT poll, options FROM poll_table";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String pollTitle = rs.getString("poll");
+                String optionsJson = rs.getString("options");
+                JSONArray optionsArray = (JSONArray) JSONValue.parse(optionsJson);
+                List<Map<String, Object>> options = new ArrayList<>();
+                for (Object optionObj : optionsArray) {
+                    JSONObject optionObject = (JSONObject) optionObj;
+                    Map<String, Object> optionData = new HashMap<>();
+                    optionData.put("option", optionObject.get("option"));
+                    optionData.put("voters", optionObject.get("voters"));
+                    options.add(optionData);
+                }
+                Map<String, Object> pollData = new HashMap<>();
+                pollData.put("title", pollTitle);
+                pollData.put("options", options);
+                polls.add(pollData);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to retrieve polls", e);
+        }
+
+        return polls;
     }
 }
