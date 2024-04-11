@@ -40,6 +40,7 @@ public class LoginMenu extends JFrame {
             DatabaseManager db = new DatabaseManager();
             if (db.loginUser(username, String.valueOf(password))) {
                 JOptionPane.showMessageDialog(this, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Logged in user: " + username + " as " + db.getUserRole(username));
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed", "Error", JOptionPane.ERROR_MESSAGE);
             }

@@ -1,5 +1,7 @@
 package SignUpMenu;
 
+import Database.DatabaseManager;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,6 +16,13 @@ public class SignUpChecker extends Component {
         // Check if username is valid
         if (username.length() > 30) {
             JOptionPane.showMessageDialog(this, "Username cannot be empty or exceed 30 characters", "Invalid Username", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Check if the user already exists in the Database
+        DatabaseManager db = new DatabaseManager();
+        if (db.checkUserExists(username)) {
+            JOptionPane.showMessageDialog(this, "Username already exists", "Invalid Username", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 

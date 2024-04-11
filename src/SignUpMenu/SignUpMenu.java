@@ -54,6 +54,7 @@ public class SignUpMenu extends JFrame {
                 DatabaseManager db = new DatabaseManager();
                 db.createUser(username, String.valueOf(password), Integer.parseInt(age));
                 JOptionPane.showMessageDialog(this, "Sign up successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Signed Up user: " + username);
 
                 new MainMenu();
                 dispose();

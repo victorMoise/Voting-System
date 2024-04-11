@@ -15,7 +15,6 @@ public class DatabaseManager {
             String username = "root";
             String url = "jdbc:mysql://localhost:3306/voting_system";
             connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Connected to database");
         } catch (SQLException ex) {
             throw new RuntimeException("Failed to connect to database", ex);
         }
@@ -76,8 +75,6 @@ public class DatabaseManager {
                 // Get the hashed password from the database
                 String hashedPassword = resultSet.getString("password");
 
-                // Check if the password matches the hashed password
-
                 // Return true if the password matches, indicating successful login
                 return BCrypt.checkpw(password, hashedPassword);
             } else {
@@ -86,6 +83,40 @@ public class DatabaseManager {
             }
         } catch (SQLException ex) {
             throw new RuntimeException("Failed to check user", ex);
+        }
+    }
+
+    public boolean checkUserExists(String username) {
+        try {
+            // Query to get the user with the given username
+            String query = "SELECT * FROM users WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Return true if the user exists
+            return resultSet.next();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Failed to check user", ex);
+        }
+    }
+
+    public String getUserRole(String username) {
+        try {
+            // Query to get the user with the given username
+            String query = "SELECT role FROM users WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Return the role of the user
+            if (resultSet.next()) {
+                return resultSet.getString("role");
+            } else {
+                throw new SQLException("User not found");
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException("Failed to get user role", ex);
         }
     }
 }
