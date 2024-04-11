@@ -3,9 +3,10 @@ package LoginMenu;
 import javax.swing.*;
 import java.awt.*;
 
-
 import Database.DatabaseManager;
 import Utils.ButtonCustomizer;
+import VoterMenu.VoterMenu;
+import AdminMenu.AdminMenu;
 
 public class LoginMenu extends JFrame {
     public LoginMenu() {
@@ -41,6 +42,14 @@ public class LoginMenu extends JFrame {
             if (db.loginUser(username, String.valueOf(password))) {
                 JOptionPane.showMessageDialog(this, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Logged in user: " + username + " as " + db.getUserRole(username));
+
+                if (db.getUserRole(username).equals("admin")) {
+                    new AdminMenu();
+                    dispose();
+                } else {
+                    new VoterMenu();
+                    dispose();
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed", "Error", JOptionPane.ERROR_MESSAGE);
             }

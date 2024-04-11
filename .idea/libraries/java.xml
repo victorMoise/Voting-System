@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="java">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../dev/JSON-java-20240303/src/main/java" />
+      <root url="file://$PROJECT_DIR$/../../../dev/JSON-java-20240303/src/test/java" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$/../../../dev/JSON-java-20240303/src/test/java" />
+      <root url="file://$PROJECT_DIR$/../../../dev/JSON-java-20240303/src/main/java" />
+    </excluded>
+  </library>
+</component>

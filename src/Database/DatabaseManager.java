@@ -1,8 +1,9 @@
 package Database;
 
 import java.sql.*;
-
+import org.json.simple.JSONArray;
 import BCrypt.BCrypt;
+import org.json.simple.JSONObject;
 
 public class DatabaseManager {
     private final Connection connection;
@@ -117,6 +118,28 @@ public class DatabaseManager {
             }
         } catch (SQLException ex) {
             throw new RuntimeException("Failed to get user role", ex);
+        }
+    }
+
+    // Method to create a new poll
+    public void createPoll(String title, String[] options) {
+        String sql = "INSERT INTO poll_table(poll, options) VALUES(?, ?)";
+        JSONArray optionsArray = new JSONArray();
+
+        // Creating JSON objects for each option
+        for (String optionTitle : options) {
+            JSONObject optionObject = new JSONObject();
+            optionObject.put("option", optionTitle);
+            optionObject.put("users_voted", new JSONArray());
+            optionsArray.add(optionObject);
+        }
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, title);
+            stmt.setString(2, optionsArray.toJSONString());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to create poll", e);
         }
     }
 }
