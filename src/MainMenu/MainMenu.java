@@ -1,7 +1,14 @@
+package MainMenu;
+
+import SignUpMenu.SignUpMenu;
+import Utils.ButtonCustomizer;
+
 import javax.swing.*;
 import java.awt.*;
 
-class MainMenu extends JFrame {
+import LoginMenu.LoginMenu;
+
+public class MainMenu extends JFrame {
     public MainMenu() {
         setTitle("Voting System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -19,8 +26,9 @@ class MainMenu extends JFrame {
         // Customize button appearance only on windows, on Mac it does not work
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.contains("windows")) {
-            customizeButton(loginButton);
-            customizeButton(signUpButton);
+            ButtonCustomizer buttonCustomizer = new ButtonCustomizer();
+            buttonCustomizer.customizeButton(loginButton);
+            buttonCustomizer.customizeButton(signUpButton);
         }
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -32,8 +40,14 @@ class MainMenu extends JFrame {
         gbc.gridy = 1;
         buttonPanel.add(signUpButton, gbc);
 
-        signUpButton.addActionListener(e -> new SignUpMenu());
-        loginButton.addActionListener(e -> new LoginMenu());
+        signUpButton.addActionListener(e -> {
+            new SignUpMenu();
+            dispose();
+        });
+        loginButton.addActionListener(e -> {
+            new LoginMenu();
+            dispose();
+        });
 
         // Add button panel to the main frame
         GridBagConstraints mainGBC = new GridBagConstraints();
@@ -45,15 +59,5 @@ class MainMenu extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    // Method to customize button appearance
-    private void customizeButton(JButton button) {
-        button.setPreferredSize(new Dimension(120, 40));
-        button.setBackground(new Color(51, 153, 255)); // Blue background color
-        button.setForeground(Color.WHITE); // White text color
-        button.setFocusPainted(false); // Remove focus border
-        button.setFont(new Font("Arial", Font.BOLD, 14)); // Custom font
-        button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15)); // Add padding
     }
 }
