@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import Utils.ButtonCustomizer;
+import MainMenu.MainMenu;
 
 public class AdminMenu extends JFrame {
     public AdminMenu() {
@@ -41,6 +42,17 @@ public class AdminMenu extends JFrame {
         buttonCustomizer.customizeButton(manageUsersButton); // Customize button
         manageUsersButton.setPreferredSize(new Dimension(200, 50)); // Set preferred size
         add(manageUsersButton, gbc);
+
+        JButton logoutButton = new JButton("Logout");
+        gbc.gridy = 3;
+        logoutButton.addActionListener(event -> {
+            new MainMenu();
+            dispose();
+        });
+        buttonCustomizer.customizeButton(logoutButton);
+        logoutButton.setPreferredSize(new Dimension(200, 50));
+        add(logoutButton, gbc);
+
 
         // Pack the components to ensure proper layout
         pack();

@@ -7,15 +7,16 @@ import Database.DatabaseManager;
 import Utils.ButtonCustomizer;
 import VoterMenu.VoterMenu;
 import AdminPanel.AdminMenu;
+import MainMenu.MainMenu;
 
 public class LoginMenu extends JFrame {
     public LoginMenu() {
         setTitle("Login Menu");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 300);
+        setSize(400, 210);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel usernameLabel = new JLabel("Username:");
@@ -33,6 +34,10 @@ public class LoginMenu extends JFrame {
         ButtonCustomizer buttonCustomizer = new ButtonCustomizer();
         buttonCustomizer.customizeButton(loginButton);
         panel.add(loginButton);
+
+        JButton backButton = new JButton("Back");
+        buttonCustomizer.customizeButton(backButton);
+        panel.add(backButton);
 
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
@@ -53,6 +58,11 @@ public class LoginMenu extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        });
+
+        backButton.addActionListener(e -> {
+            new MainMenu();
+            dispose();
         });
 
         add(panel);

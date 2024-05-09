@@ -43,6 +43,10 @@ public class SignUpMenu extends JFrame {
         buttonCustomizer.customizeButton(signUpButton);
         panel.add(signUpButton);
 
+        JButton backButton = new JButton("Back");
+        buttonCustomizer.customizeButton(backButton);
+        panel.add(backButton);
+
         signUpButton.addActionListener(e -> {
             String username = usernameField.getText();
             char[] password = passwordField.getPassword();
@@ -59,6 +63,11 @@ public class SignUpMenu extends JFrame {
                 new MainMenu();
                 dispose();
             }
+        });
+
+        backButton.addActionListener(e -> {
+            new MainMenu();
+            dispose();
         });
 
         add(panel);

@@ -83,5 +83,4 @@ public class PollResultsMenu extends JFrame {
 
         JOptionPane.showMessageDialog(this, message.toString(), "Poll Details", JOptionPane.INFORMATION_MESSAGE);
     }
-
 }

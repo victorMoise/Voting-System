@@ -10,10 +10,10 @@ public class CreatePollMenu extends JFrame {
     public CreatePollMenu() {
         setTitle("Poll Creation Menu");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 300);
+        setSize(400, 210);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel usernameLabel = new JLabel("Title:");
@@ -32,16 +32,21 @@ public class CreatePollMenu extends JFrame {
         buttonCustomizer.customizeButton(createPollButton);
         panel.add(createPollButton);
 
+        JButton backButton = new JButton("Back");
+        buttonCustomizer.customizeButton(backButton);
+        panel.add(backButton);
+
         createPollButton.addActionListener(e -> {
             String title = usernameField.getText();
             String options = optionsField.getText();
             String[] optionsArray = options.split(",");
-            for (String option : optionsArray) {
-                System.out.println(option);
-            }
             DatabaseManager db = new DatabaseManager();
             db.createPoll(title, optionsArray);
             JOptionPane.showMessageDialog(this, "Poll created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        });
+
+        backButton.addActionListener(e -> {
             dispose();
         });
 
